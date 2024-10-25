@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Adivinanza</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        #intentos {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adivina el número</h1>
+    <p>Estoy pensando en un número entre 1 y 100.</p>
+    <input type="number" id="numero" placeholder="Ingresa tu número" min="1" max="100">
+    <button onclick="adivinar()">Adivinar</button>
+    <div id="resultado"></div>
+    <div id="intentos"></div>
+
+    <script>
+        let numeroSecreto = Math.floor(Math.random() * 100) + 1;
+        let intentos = 0;
+
+        function adivinar() {
+            const numero = parseInt(document.getElementById('numero').value);
+            intentos++;
+
+            if (numero < 1 || numero > 100 || isNaN(numero)) {
+                document.getElementById('resultado').innerText = "Por favor, ingresa un número entre 1 y 100.";
+                return;
+            }
+
+            if (numero === numeroSecreto) {
+                document.getElementById('resultado').innerText = `¡Felicidades! Adivinaste el número ${numeroSecreto} en ${intentos} intentos.`;
+                document.getElementById('intentos').innerText = "";
+                // Reiniciar el juego
+                resetearJuego();
+            } else if (numero < numeroSecreto) {
+                document.getElementById('resultado').innerText = "Demasiado bajo. Intenta de nuevo.";
+            } else {
+                document.getElementById('resultado').innerText = "Demasiado alto. Intenta de nuevo.";
+            }
+
+            document.getElementById('intentos').innerText = `Intentos realizados: ${intentos}`;
+        }
+
+        function resetearJuego() {
+            numeroSecreto = Math.floor(Math.random() * 100) + 1;
+            intentos = 0;
+            document.getElementById('numero').value = '';
+        }
+    </script>
+</body>
+</html>
